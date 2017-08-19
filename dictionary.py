@@ -4,13 +4,15 @@ import numpy as np
 import os
 import codecs
 
-class Dictionary:
+class dictionary:
+  pn_wago_verbs_and_adjectives = {}
+  pn_wago_nouns = {}
 
   def __init__(self):
-    pn_wago_verbs_and_adjectives = self.create_pn_wago_verbs_and_adjectives()
-    pn_wago_nouns = self.create_pn_wago_nouns()
+    self.pn_wago_verbs_and_adjectives = self.create_pn_wago_verbs_and_adjectives()
+    self.pn_wago_nouns = self.create_pn_wago_nouns()
 
-  def create_pn_wago_verbs_and_adjectives(self)
+  def create_pn_wago_verbs_and_adjectives(self):
     point = np.empty(0)
     word = np.empty(0)
     f = codecs.open("dataset/wago.121808.pn", 'r', 'utf-8')
@@ -28,6 +30,6 @@ class Dictionary:
     lines = f.readlines()
     for line in lines:
       content = line.split(',')
-      word.append(content[0])
-      point.append(content[1])
+      word = np.append(word, content[0])
+      point = np.append(point, content[1])
     return {'word': word, 'point': point}
