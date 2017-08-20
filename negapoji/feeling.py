@@ -4,7 +4,7 @@ import numpy as np
 import os
 import re
 import codecs
-import dictionary
+from negapoji import dictionary
 
 
 class feeling:
@@ -14,6 +14,9 @@ class feeling:
     self.pn_wago_verbs_and_adjectives = self.set_pn_wago_verbs_and_adjectives()
     self.pn_wago_nouns = self.set_pn_wago_nouns()
     self.hinshi_collected = ['名詞', '形容詞', '副詞', '動詞']
+
+  def judge(self, sentence):
+    return "positive" if self.pointing(sentence) >= 0 else "negative"
 
   def pointing(self, sentence):
     sentence_chomped = self.remove_kaigyo(sentence)
