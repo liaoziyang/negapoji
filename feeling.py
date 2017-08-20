@@ -18,6 +18,7 @@ class feeling:
   def pointing(self, sentence):
     sentence_chomped = self.remove_kaigyo(sentence)
     point = self.simple_voting(self.inui_okazaki(sentence_chomped))
+    return point 
 
   def inui_okazaki(self, sentence):
     word_point_list = np.empty(0)
@@ -29,7 +30,7 @@ class feeling:
         if feature[0] in self.hinshi_collected:
           pn = self.pn_wago_nouns if feature[0] == "名詞" else self.pn_wago_verbs_and_adjectives
           index = np.where(pn['word']==feature[6])
-          if index != None:
+          if index[0].size != 0:
             word_point_list = np.append(word_point_list, {"word": feature[6], "point": pn['point'][index]})
     return word_point_list
 
@@ -44,8 +45,8 @@ class feeling:
   def simple_voting(self, word_point_list):
     the_day_point = 0
     for word_point in word_point_list:
-      the_day_point += float(word_point[point])
-    return the_day_point if the_day_point == 0 else the_day_point/int(word_point_list.count)
+      the_day_point = the_day_point + float(word_point['point'].item())
+    return the_day_point if the_day_point == 0 else the_day_point/int(len(word_point_list))
 
   def remove_kaigyo(self, sentence):
     return re.sub('/(\r\n|\r|\n|\f)/', "",sentence)
